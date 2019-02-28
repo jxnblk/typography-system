@@ -2,8 +2,9 @@
   "name": "typography-system",
   "version": "0.0.1",
   "description": "The unholy union of styled-system and typography.js",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
+    "prepare": "babel src -d dist",
     "start": "mdxs docs/index.js",
     "test": "jest"
   },
