@@ -3,7 +3,7 @@
 
 The unholy union of styled-system and typography.js
 
-**WIP**
+**WIP - NOT READY FOR PRIMETIME** 
 
 ```sh
 npm i typography-system
