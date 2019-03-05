@@ -62,7 +62,7 @@ const ThemeDebug = ({
 export default props => {
   const [ themeName, setTheme ] = useState('jxnblk')
   const theme = themes[themeName]
-  const T = createComponents(theme)
+  // const T = createComponents(theme)
 
   return (
     <TypographyProvider theme={theme}>
@@ -115,18 +115,15 @@ export default props => {
         </Flex>
         <h1>typography-system</h1>
         <GettingStarted />
-        {false && (
-          <Box p={3}
-            mb={3}
-            bg='lightgray'>
-            <Text
-              fontFamily='heading'
-              fontSize={4}
-              fontWeight='bold'>
-              Text Component
-            </Text>
-          </Box>
-        )}
+        <Box p={3} bg='#eee'>
+          <Text
+            as='p'
+            fontFamily='heading'
+            fontSize={4}
+            fontWeight='bold'>
+            Text Component
+          </Text>
+        </Box>
       </Container>
     </TypographyProvider>
   )

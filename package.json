@@ -1,6 +1,6 @@
 {
   "name": "typography-system",
-  "version": "0.0.2",
+  "version": "0.0.6",
   "description": "The unholy union of styled-system and typography.js",
   "main": "dist/index.js",
   "scripts": {
@@ -27,6 +27,7 @@
     "@babel/core": "^7.3.4",
     "@babel/preset-env": "^7.3.4",
     "@babel/preset-react": "^7.0.0",
+    "@jxnblk/typography": "0.0.1",
     "jest": "^24.1.0",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",

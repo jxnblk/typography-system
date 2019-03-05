@@ -1,6 +1,10 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
-import { TypographyProvider } from '../src'
+import Typography from 'typography'
+import {
+  TypographyProvider,
+  createTheme
+} from '../src'
 import { themes } from '../docs/src/themes'
 
 const renderJSON = el => renderer.create(el).toJSON()
@@ -15,4 +19,19 @@ test.each([
     </TypographyProvider>
   )
   expect(json).toMatchSnapshot()
+})
+
+test('creates a styled-system theme based on a typography.js theme', () => {
+  const typography = new Typography({
+    baseFontSize: '16px',
+    baseLineHeight: 1.5,
+    rhythmUnit: 'px',
+  })
+  const theme = createTheme(typography)
+  expect(typeof theme).toBe('object')
+  expect(Array.isArray(theme.space)).toBe(true)
+  expect(Array.isArray(theme.fontSizes)).toBe(true)
+  expect(typeof theme.colors).toBe('object')
+  expect(typeof theme.fonts).toBe('object')
+  expect(theme).toMatchSnapshot()
 })

@@ -1,6 +1,6 @@
 import React, { useMemo, useEffect, useContext } from 'react'
 import Typography from 'typography'
-import { Global, ThemeContext } from '@emotion/core'
+import { ThemeContext } from '@emotion/core'
 import styled from '@emotion/styled'
 import { ThemeProvider } from 'emotion-theming'
 import {
@@ -13,11 +13,15 @@ import {
 } from 'styled-system'
 import merge from 'lodash.merge'
 import get from 'lodash.get'
-import upperfirst from 'lodash.upperfirst'
+import upperFirst from 'lodash.upperfirst'
 
 export const Root = styled.div(
   color
 )
+
+export const useTypography = () => {
+  return useContext(ThemeContext)
+}
 
 const stackFonts = (fonts = []) =>
   fonts.map(font => `"${font}"`).join(', ')
@@ -35,7 +39,7 @@ const getFontSizes = styles => {
   return arr
 }
 
-export const createTheme = (baseTheme, typography) => {
+export const createTheme = (typography) => {
   const {
     bodyFontFamily,
     headerFontFamily,
@@ -63,34 +67,24 @@ export const createTheme = (baseTheme, typography) => {
   const colors = merge({
     text: get(styles, 'body.color'),
     link: get(styles, 'a.color'),
-  }, baseTheme.colors)
+  }, typography.options.colors)
 
   const scale = [
-    0, 1, 2, 3, 4, 5, 6, 7, 8
+    0, 1, 2, 3, 4, 5, 6, 7
   ].map(n => Math.pow(2, n))
-
   const space = [
     0,
-    ...scale.map(n => typography.rhythm(n / 6)),
-    /*
-    typography.rhythm(1/6),
-    typography.rhythm(1/3),
-    typography.rhythm(2/3),
-    typography.rhythm(4/3),
-    typography.rhythm(8/3),
-    typography.rhythm(16/3),
-    typography.rhythm(16),
-    */
+    ...scale.map(n => typography.rhythm(n / 6))
   ]
 
   const theme = {
+    ...typography.options,
     fonts,
     fontSizes,
     fontWeights,
     lineHeights,
     colors,
     space,
-    ...baseTheme,
   }
   return theme
 }
@@ -125,6 +119,7 @@ export const GoogleFont = props => {
 export const TypographyProvider = ({
   theme,
   options = {},
+  googleFonts = true,
   ...props
 }) => {
   const [ styles, systemTheme ] = useMemo(() => {
@@ -133,7 +128,7 @@ export const TypographyProvider = ({
       includeNormalize: false,
       ...options
     })
-    const systemTheme = createTheme(theme, typography)
+    const systemTheme = createTheme(typography)
     const styles = typography.toString()
     return [ styles, systemTheme ]
   }, [ theme ])
@@ -141,7 +136,7 @@ export const TypographyProvider = ({
 
   return (
     <ThemeProvider theme={systemTheme}>
-      <GoogleFont theme={theme} />
+      {googleFonts && <GoogleFont theme={theme} />}
       <style
         dangerouslySetInnerHTML={{
           __html: styles
@@ -181,7 +176,7 @@ export const createComponents = (baseTheme, options = {}) => {
     includeNormalize: false,
     ...options
   })
-  const theme = createTheme(baseTheme, typography)
+  const theme = createTheme(typography)
   const styles = typography.toJSON()
   const Provider = ({ theme: _theme, ...props }) =>
     <ThemeProvider
@@ -198,7 +193,7 @@ export const createComponents = (baseTheme, options = {}) => {
       lineHeight,
       color
     )
-    components[upperfirst(tag)] = components[tag]
+    components[upperFirst(tag)] = components[tag]
   })
 
   return {
@@ -206,5 +201,3 @@ export const createComponents = (baseTheme, options = {}) => {
     ...components
   }
 }
-
-export const useTypography = () => useContext(ThemeContext)
