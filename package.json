@@ -12,15 +12,17 @@
   "author": "Brent Jackson <jxnblk@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@emotion/core": "^10.0.7",
-    "@emotion/styled": "^10.0.7",
-    "emotion-theming": "^10.0.7",
     "lodash.get": "^4.4.2",
     "lodash.merge": "^4.6.1",
     "lodash.upperfirst": "^4.3.1",
     "styled-system": "^4.0.1",
     "typography": "^0.16.18",
     "typography-breakpoint-constants": "^0.16.18"
+  },
+  "peerDependencies": {
+    "@emotion/core": "^10.0.7",
+    "@emotion/styled": "^10.0.7",
+    "emotion-theming": "^10.0.7"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
