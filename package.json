@@ -1,6 +1,6 @@
 {
   "name": "typography-system",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "The unholy union of styled-system and typography.js",
   "main": "index.js",
   "scripts": {
