@@ -9,8 +9,6 @@ The unholy union of [styled-system][] and [typography.js][]
 npm i typography-system
 ```
 
-## Getting Started
-
 Typography System is intended for use with React and Emotion.
 Start by adding the `TypographyProvider` component to the root of your application
 and adding a Typography.js theme.
