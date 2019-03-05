@@ -46,6 +46,19 @@ export default props =>
   </Box>
 ```
 
+## API
+
+### TypographyProvider
+
+React component for creating a combined theme, providing it in Emotion's theme context, and rendering a `<style>` tag with base Typography.js styles.
+
+- `theme` (object): a Typography.js theme with optional Styled System theme fields
+- `googleFonts` (boolean, default `true`): inject a `<link>` tag for Google Fonts when included in the theme
+- `options` (object): additional options to pass to Typography.js
+  - `includeNormalize` (boolean)
+  - `overrideStyles` (boolean)
+  - `overrideThemeStyles` (boolean)
+
 MIT License
 
 [typography.js]: https://github.com/KyleAMathews/typography.js
