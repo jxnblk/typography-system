@@ -36,8 +36,10 @@ import wp2016 from 'typography-theme-wordpress-2016'
 import trajan from 'typography-theme-trajan'
 import zacklive from 'typography-theme-zacklive'
 import anonymous from 'typography-theme-anonymous'
+import jxnblk from '@jxnblk/typography'
 
 export const themes = {
+  jxnblk,
   alton,
   bootstrap,
   young,

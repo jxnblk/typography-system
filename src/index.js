@@ -74,7 +74,11 @@ export const createTheme = (typography) => {
   ].map(n => Math.pow(2, n))
   const space = [
     0,
-    ...scale.map(n => typography.rhythm(n / 6))
+    ...scale.map(n => {
+      // const d = parseFloat(typography.rhythm(1)) / 2
+      const x = typography.rhythm(n / 12)
+      return x
+    })
   ]
 
   const theme = {
@@ -172,7 +176,7 @@ export const createComponents = (baseTheme, options = {}) => {
     includeNormalize: false,
     ...options
   })
-  const theme = createTheme(baseTheme, typography)
+  const theme = createTheme(typography)
   const styles = typography.toJSON()
   const Provider = ({ theme: _theme, ...props }) =>
     <ThemeProvider

@@ -25,6 +25,7 @@ test('creates a styled-system theme based on a typography.js theme', () => {
   const typography = new Typography({
     baseFontSize: '16px',
     baseLineHeight: 1.5,
+    rhythmUnit: 'px',
   })
   const theme = createTheme(typography)
   expect(typeof theme).toBe('object')

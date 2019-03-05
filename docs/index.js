@@ -13,6 +13,7 @@ import {
 } from 'styled-system'
 import {
   TypographyProvider,
+  useTypography,
   createComponents
 } from '../src'
 import GettingStarted from './getting-started.mdx'
@@ -47,10 +48,18 @@ const Container = props =>
     }}
   />
 
+const Debug = props => {
+  const theme = useTypography()
+  console.log(theme)
+  return (
+    <pre children={JSON.stringify(theme, null, 2)} />
+  )
+}
+
 export default props => {
-  const [ themeName, setTheme ] = useState('funston')
+  const [ themeName, setTheme ] = useState('jxnblk')
   const theme = themes[themeName]
-  const T = createComponents(theme)
+  // const T = createComponents(theme)
 
   return (
     <TypographyProvider theme={theme}>
@@ -80,10 +89,30 @@ export default props => {
               />
             ))}
           </select>
+          <button
+            onClick={e => {
+              const keys = Object.keys(themes)
+              const i = keys.indexOf(themeName)
+              const previous = keys[i - 1]
+              if (!previous) return
+              setTheme(previous)
+            }}>
+            Previous
+          </button>
+          <button
+            onClick={e => {
+              const keys = Object.keys(themes)
+              const i = keys.indexOf(themeName)
+              const next = keys[i + 1]
+              if (!next) return
+              setTheme(next)
+            }}>
+            Next
+          </button>
         </Flex>
         <h1>typography-system</h1>
         <GettingStarted />
-        <Box p={3} bg='primary'>
+        <Box p={3} bg='#eee'>
           <Text
             as='p'
             fontFamily='heading'
@@ -91,7 +120,6 @@ export default props => {
             fontWeight='bold'>
             Text Component
           </Text>
-          <T.h1 color='tomato'>T.h1 component</T.h1>
         </Box>
       </Container>
     </TypographyProvider>
