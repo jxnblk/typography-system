@@ -5,22 +5,16 @@
 npm i typography-system
 ```
 
-https://github.com/jxnblk/typography-system
+Import the `TypographyProvider` component and provide a Typography.js theme at the root of your application.
 
-Do something...
+```jsx
+import React from 'react'
+import { TypographyProvider } from 'typography-system'
+import wordpress2016 from "typography-theme-wordpress-2016"
 
----
-
-# Hamburger 1
-## Hamburger 2
-### Hamburger 3
-#### Hamburger 4
-##### Hamburger 5
-###### Hamburger 6
-
-> This is a blockquote
-
-- And this
-- Is an unordered list
-- You can add things in *any* order
+export default props =>
+  <TypographyProvider theme={wordpress2016}>
+    <h1>Hello</h1>
+  </TypographyProvider>
+```
 

@@ -60,7 +60,7 @@ const ThemeDebug = ({
 }
 
 export default props => {
-  const [ themeName, setTheme ] = useState('funston')
+  const [ themeName, setTheme ] = useState('jxnblk')
   const theme = themes[themeName]
   const T = createComponents(theme)
 
@@ -113,19 +113,20 @@ export default props => {
             Next
           </button>
         </Flex>
-        <ThemeDebug />
         <h1>typography-system</h1>
-        <Box p={3}
-          mb={3}
-          bg='lightgray'>
-          <Text
-            fontFamily='heading'
-            fontSize={4}
-            fontWeight='bold'>
-            Text Component
-          </Text>
-        </Box>
         <GettingStarted />
+        {false && (
+          <Box p={3}
+            mb={3}
+            bg='lightgray'>
+            <Text
+              fontFamily='heading'
+              fontSize={4}
+              fontWeight='bold'>
+              Text Component
+            </Text>
+          </Box>
+        )}
       </Container>
     </TypographyProvider>
   )
