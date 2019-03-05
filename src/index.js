@@ -120,6 +120,7 @@ export const GoogleFont = props => {
 export const TypographyProvider = ({
   theme,
   options = {},
+  googleFonts = true,
   ...props
 }) => {
   const [ styles, systemTheme ] = useMemo(() => {
@@ -136,7 +137,7 @@ export const TypographyProvider = ({
 
   return (
     <ThemeProvider theme={systemTheme}>
-      <GoogleFont theme={theme} />
+      {googleFonts && <GoogleFont theme={theme} />}
       <style
         dangerouslySetInnerHTML={{
           __html: styles
