@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect } from 'react'
+import React, { useMemo, useEffect, useContext, createContext } from 'react'
 import Typography from 'typography'
 import { Global, css } from '@emotion/core'
 import styled from '@emotion/styled'
@@ -10,6 +10,11 @@ import get from 'lodash.get'
 export const Root = styled.div(
   color
 )
+
+export const TypographyContext = createContext({})
+export const useTypography = () => {
+  return useContext(TypographyContext)
+}
 
 const stackFonts = (fonts = []) =>
   fonts.map(font => `"${font}"`).join(', ')
@@ -122,14 +127,16 @@ export const TypographyProvider = ({
 
 
   return (
-    <ThemeProvider theme={systemTheme}>
-      <GoogleFont theme={theme} />
-      <style
-        dangerouslySetInnerHTML={{
-          __html: styles
-        }}
-      />
-      <Root {...props} />
-    </ThemeProvider>
+    <TypographyContext.Provider value={theme}>
+      <ThemeProvider theme={systemTheme}>
+        <GoogleFont theme={theme} />
+        <style
+          dangerouslySetInnerHTML={{
+            __html: styles
+          }}
+        />
+        <Root {...props} />
+      </ThemeProvider>
+    </TypographyContext.Provider>
   )
 }
