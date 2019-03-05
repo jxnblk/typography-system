@@ -1,15 +1,27 @@
-import React, { useMemo, useEffect } from 'react'
+import React, { useMemo, useEffect, useContext } from 'react'
 import Typography from 'typography'
-import { Global, css } from '@emotion/core'
-import styled from '@emotion/styled'
+import { ThemeContext } from '@emotion/core'
 import { ThemeProvider } from 'emotion-theming'
-import { color } from 'styled-system'
+import {
+  space,
+  fontFamily,
+  fontSize,
+  fontWeight,
+  lineHeight,
+  color
+} from 'styled-system'
+import styled from '@emotion/styled'
 import merge from 'lodash.merge'
 import get from 'lodash.get'
+import upperFirst from 'lodash.upperfirst'
 
 export const Root = styled.div(
   color
 )
+
+export const useTypography = () => {
+  return useContext(ThemeContext)
+}
 
 const stackFonts = (fonts = []) =>
   fonts.map(font => `"${font}"`).join(', ')
@@ -129,4 +141,59 @@ export const TypographyProvider = ({
       <Root {...props} />
     </ThemeProvider>
   )
+}
+
+const elements = [
+  'h1',
+  'h2',
+  'h3',
+  'h4',
+  'h5',
+  'h6',
+  'a',
+  'p',
+  'img',
+  'ul',
+  'ol',
+  'li',
+  'dl',
+  'dd',
+  'code',
+  'pre',
+  'blockquote',
+  'strong',
+  'b',
+  'hr',
+]
+
+export const createComponents = (baseTheme, options = {}) => {
+  const typography = new Typography({
+    ...baseTheme,
+    includeNormalize: false,
+    ...options
+  })
+  const theme = createTheme(baseTheme, typography)
+  const styles = typography.toJSON()
+  const Provider = ({ theme: _theme, ...props }) =>
+    <ThemeProvider
+      {...props}
+      theme={{ ...theme, ..._theme }}
+    />
+  const components = {}
+  elements.forEach(tag => {
+    components[tag] = styled(tag)(styles[tag],
+      space,
+      fontFamily,
+      fontSize,
+      fontWeight,
+      lineHeight,
+      color
+    )
+    components[upperFirst(tag)] = components[tag]
+  })
+
+  return {
+    ThemeProvider: Provider,
+    ...components
+  }
 }

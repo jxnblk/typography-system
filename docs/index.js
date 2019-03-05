@@ -12,7 +12,8 @@ import {
   color
 } from 'styled-system'
 import {
-  TypographyProvider
+  TypographyProvider,
+  createComponents
 } from '../src'
 import GettingStarted from './getting-started.mdx'
 import { themes } from './themes'
@@ -48,12 +49,8 @@ const Container = props =>
 
 export default props => {
   const [ themeName, setTheme ] = useState('funston')
-  const theme = {
-    ...themes[themeName],
-    colors: {
-      primary: '#07c',
-    }
-  }
+  const theme = themes[themeName]
+  const T = createComponents(theme)
 
   return (
     <TypographyProvider theme={theme}>
@@ -94,6 +91,7 @@ export default props => {
             fontWeight='bold'>
             Text Component
           </Text>
+          <T.h1 color='tomato'>T.h1 component</T.h1>
         </Box>
       </Container>
     </TypographyProvider>
