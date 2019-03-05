@@ -13,6 +13,7 @@ import {
 import styled from '@emotion/styled'
 import merge from 'lodash.merge'
 import get from 'lodash.get'
+import upperFirst from 'lodash.upperfirst'
 
 export const Root = styled.div(
   color
@@ -191,6 +192,7 @@ export const createComponents = (baseTheme, options = {}) => {
       lineHeight,
       color
     )
+    components[upperFirst(tag)] = components[tag]
   })
 
   return {
