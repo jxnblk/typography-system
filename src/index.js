@@ -1,6 +1,6 @@
 import React, { useMemo, useEffect } from 'react'
 import Typography from 'typography'
-import { Global, css } from '@emotion/core'
+import { Global, css, ThemeContext } from '@emotion/core'
 import styled from '@emotion/styled'
 import { ThemeProvider } from 'emotion-theming'
 import {
@@ -13,10 +13,13 @@ import {
 } from 'styled-system'
 import merge from 'lodash.merge'
 import get from 'lodash.get'
+import upperfirst from 'lodash.upperfirst'
 
-export const Root = styled.div(
-  color
-)
+export const Root = props =>
+  <div
+    {...props}
+    css={theme => color({ theme })}
+  />
 
 const stackFonts = (fonts = []) =>
   fonts.map(font => `"${font}"`).join(', ')
@@ -127,9 +130,8 @@ export const TypographyProvider = ({
     return [ styles, systemTheme ]
   }, [ theme ])
 
-
   return (
-    <ThemeProvider theme={systemTheme}>
+    <ThemeContext.Provider theme={systemTheme}>
       <GoogleFont theme={theme} />
       <style
         dangerouslySetInnerHTML={{
@@ -137,7 +139,7 @@ export const TypographyProvider = ({
         }}
       />
       <Root {...props} />
-    </ThemeProvider>
+    </ThemeContext.Provider>
   )
 }
 
@@ -178,8 +180,23 @@ export const createComponents = (baseTheme, options = {}) => {
       theme={{ ...theme, ..._theme }}
     />
   const components = {}
-  elements.forEach(tag => {
-    components[tag] = styled(tag)(styles[tag],
+  elements.forEach(Tag => {
+    // testing without @emotion/styled
+    /*
+    components[Tag] = props =>
+      <Tag
+        css={theme => [
+          styles[Tag],
+          space({ theme }),
+          fontFamily({ theme }),
+          fontSize({ theme }),
+          fontWeight({ theme }),
+          lineHeight({ theme }),
+          color({ theme }),
+        ]}
+      />
+    */
+    components[Tag] = styled(Tag)(styles[Tag],
       space,
       fontFamily,
       fontSize,
@@ -187,6 +204,7 @@ export const createComponents = (baseTheme, options = {}) => {
       lineHeight,
       color
     )
+    components[upperfirst(Tag)] = components[Tag]
   })
 
   return {

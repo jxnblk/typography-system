@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { ThemeContext } from '@emotion/core'
 import styled from '@emotion/styled'
 import {
   space,
@@ -14,9 +15,9 @@ import {
 import {
   TypographyProvider,
   createComponents
-} from '../src'
+} from 'typography-system'
 import GettingStarted from './getting-started.mdx'
-import { themes } from './themes'
+import { themes } from '../themes'
 
 const Box = styled.div(
   space,
@@ -93,6 +94,11 @@ export default props => {
           </Text>
           <T.h1 color='tomato'>T.h1 component</T.h1>
         </Box>
+        <ThemeContext.Consumer>
+          {system => (
+            <pre children={JSON.stringify(system, null, 2)} />
+          )}
+        </ThemeContext.Consumer>
       </Container>
     </TypographyProvider>
   )
