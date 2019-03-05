@@ -62,7 +62,10 @@ const ThemeDebug = ({
 export default props => {
   const [ themeName, setTheme ] = useState('jxnblk')
   const theme = themes[themeName]
-  // const T = createComponents(theme)
+  const { H1, P } = createComponents(theme)
+  theme.colors = {
+    primary: '#07c',
+  }
 
   return (
     <TypographyProvider theme={theme}>
@@ -115,7 +118,8 @@ export default props => {
         </Flex>
         <h1>typography-system</h1>
         <GettingStarted />
-        <Box p={3} bg='#eee'>
+        <Box p={3} color='white' bg='primary'>
+          <P>Hello, Components</P>
           <Text
             as='p'
             fontFamily='heading'
