@@ -18,7 +18,7 @@
     "lodash.get": "^4.4.2",
     "lodash.merge": "^4.6.1",
     "lodash.upperfirst": "^4.3.1",
-    "styled-system": "^4.0.0",
+    "styled-system": "^4.0.1",
     "typography": "^0.16.18",
     "typography-breakpoint-constants": "^0.16.18"
   },
@@ -27,6 +27,7 @@
     "@babel/core": "^7.3.4",
     "@babel/preset-env": "^7.3.4",
     "@babel/preset-react": "^7.0.0",
+    "@jxnblk/typography": "0.0.1",
     "jest": "^24.1.0",
     "mdxs": "0.0.0-3",
     "react": "^16.8.3",
