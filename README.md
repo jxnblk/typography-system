@@ -1,9 +1,9 @@
 
 # typography-system
 
-The unholy union of styled-system and typography.js
+The unholy union of [styled-system][] and [typography.js][]
 
-**WIP - NOT READY FOR PRIMETIME** 
+**WIP - NOT READY FOR PRIMETIME**
 
 ```sh
 npm i typography-system
@@ -11,23 +11,46 @@ npm i typography-system
 
 ## Getting Started
 
-- Create a theme
-  - typography.js theme
-  + styled-system theme
-- Add the TypographyProvider
+Typography System is intended for use with React and Emotion.
+Start by adding the `TypographyProvider` component to the root of your application
+and adding a Typography.js theme.
 
-## Theming
+```jsx
+import React from 'react'
+import { TypographyProvider } from 'typography-system'
+import wp2016 from 'typography-theme-wordpress-2016'
 
-```js
-// theme.js
-export default {
-}
+export default props =>
+  <TypographyProvider theme={wp2016}>
+    <h1>Hello</h1>
+  </TypographyProvider>
 ```
 
+Typography System will generate a Styled System-compatible theme based on the Typography.js theme.
+Use Styled System components within your application.
 
-## Extras
+```jsx
+import React from 'react'
+import styled from '@emotion/styled'
+import { space, color } from 'styled-system'
 
-TK
+const Box = styled('div')(
+  space,
+  color
+)
 
-- TypographyMDXProvider
-- Import base components
+export default props =>
+  <Box
+    p={3}
+    mb={3}
+    bg='tomato'>
+    <h1>Hello</h1>
+  </Box>
+```
+
+MIT License
+
+[typography.js]: https://github.com/KyleAMathews/typography.js
+[styled-system]: https://styled-system.com/
+[react]: https://reactjs.org/
+[emotion]: https://emotion.sh
