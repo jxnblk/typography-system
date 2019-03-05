@@ -1,8 +1,8 @@
-import React, { useMemo, useEffect } from 'react'
+import React, { useMemo, useEffect, useContext } from 'react'
 import Typography from 'typography'
-import { Global, css } from '@emotion/core'
-import styled from '@emotion/styled'
+import { ThemeContext } from '@emotion/core'
 import { ThemeProvider } from 'emotion-theming'
+import styled from '@emotion/styled'
 import { color } from 'styled-system'
 import merge from 'lodash.merge'
 import get from 'lodash.get'
@@ -10,6 +10,10 @@ import get from 'lodash.get'
 export const Root = styled.div(
   color
 )
+
+export const useTypography = () => {
+  return useContext(ThemeContext)
+}
 
 const stackFonts = (fonts = []) =>
   fonts.map(font => `"${font}"`).join(', ')
