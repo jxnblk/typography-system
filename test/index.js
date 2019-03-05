@@ -1,7 +1,7 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
 import { TypographyProvider } from '../src'
-import { themes } from '../docs/themes'
+import { themes } from '../docs/src/themes'
 
 const renderJSON = el => renderer.create(el).toJSON()
 

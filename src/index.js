@@ -1,6 +1,6 @@
-import React, { useMemo, useEffect } from 'react'
+import React, { useMemo, useEffect, useContext } from 'react'
 import Typography from 'typography'
-import { Global, css, ThemeContext } from '@emotion/core'
+import { Global, ThemeContext } from '@emotion/core'
 import styled from '@emotion/styled'
 import { ThemeProvider } from 'emotion-theming'
 import {
@@ -15,11 +15,9 @@ import merge from 'lodash.merge'
 import get from 'lodash.get'
 import upperfirst from 'lodash.upperfirst'
 
-export const Root = props =>
-  <div
-    {...props}
-    css={theme => color({ theme })}
-  />
+export const Root = styled.div(
+  color
+)
 
 const stackFonts = (fonts = []) =>
   fonts.map(font => `"${font}"`).join(', ')
@@ -67,15 +65,22 @@ export const createTheme = (baseTheme, typography) => {
     link: get(styles, 'a.color'),
   }, baseTheme.colors)
 
+  const scale = [
+    0, 1, 2, 3, 4, 5, 6, 7, 8
+  ].map(n => Math.pow(2, n))
+
   const space = [
     0,
-    typography.rhythm(1/4),
-    typography.rhythm(1/2),
-    typography.rhythm(1),
-    typography.rhythm(2),
-    typography.rhythm(4),
-    typography.rhythm(8),
+    ...scale.map(n => typography.rhythm(n / 6)),
+    /*
+    typography.rhythm(1/6),
+    typography.rhythm(1/3),
+    typography.rhythm(2/3),
+    typography.rhythm(4/3),
+    typography.rhythm(8/3),
+    typography.rhythm(16/3),
     typography.rhythm(16),
+    */
   ]
 
   const theme = {
@@ -90,20 +95,23 @@ export const createTheme = (baseTheme, typography) => {
   return theme
 }
 
+const createFontHREF = fonts =>
+  '//fonts.googleapis.com/css?family=' +
+  fonts.map(font => {
+    let str = ''
+    str += font.name.split(' ').join('+')
+    str += ':'
+    str += font.styles.join(',')
+    return str
+  }).join('|')
+
 export const GoogleFont = props => {
   useEffect(() => {
     if (!props.theme.googleFonts) return
     const link = document.head.appendChild(
       document.createElement('link')
     )
-    const fonts = props.theme.googleFonts.map(font => {
-      let str = ''
-      str += font.name.split(' ').join('+')
-      str += ':'
-      str += font.styles.join(',')
-      return str
-    }).join('|')
-    link.href = '//fonts.googleapis.com/css?family=' + fonts
+    link.href = createFontHREF(props.theme.googleFonts)
     link.setAttribute('rel', 'stylesheet')
 
     return () => {
@@ -130,8 +138,9 @@ export const TypographyProvider = ({
     return [ styles, systemTheme ]
   }, [ theme ])
 
+
   return (
-    <ThemeContext.Provider theme={systemTheme}>
+    <ThemeProvider theme={systemTheme}>
       <GoogleFont theme={theme} />
       <style
         dangerouslySetInnerHTML={{
@@ -139,7 +148,7 @@ export const TypographyProvider = ({
         }}
       />
       <Root {...props} />
-    </ThemeContext.Provider>
+    </ThemeProvider>
   )
 }
 
@@ -180,23 +189,8 @@ export const createComponents = (baseTheme, options = {}) => {
       theme={{ ...theme, ..._theme }}
     />
   const components = {}
-  elements.forEach(Tag => {
-    // testing without @emotion/styled
-    /*
-    components[Tag] = props =>
-      <Tag
-        css={theme => [
-          styles[Tag],
-          space({ theme }),
-          fontFamily({ theme }),
-          fontSize({ theme }),
-          fontWeight({ theme }),
-          lineHeight({ theme }),
-          color({ theme }),
-        ]}
-      />
-    */
-    components[Tag] = styled(Tag)(styles[Tag],
+  elements.forEach(tag => {
+    components[tag] = styled(tag)(styles[tag],
       space,
       fontFamily,
       fontSize,
@@ -204,7 +198,7 @@ export const createComponents = (baseTheme, options = {}) => {
       lineHeight,
       color
     )
-    components[upperfirst(Tag)] = components[Tag]
+    components[upperfirst(tag)] = components[tag]
   })
 
   return {
@@ -212,3 +206,5 @@ export const createComponents = (baseTheme, options = {}) => {
     ...components
   }
 }
+
+export const useTypography = () => useContext(ThemeContext)

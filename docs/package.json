@@ -11,10 +11,10 @@
     "@mdx-js/tag": "^0.18.0",
     "gatsby": "^2.1.22",
     "gatsby-mdx": "^0.4.2",
-    "gatsby-plugin-emotion": "^4.0.4",
-    "typography-system": "0.0.2"
+    "gatsby-plugin-emotion": "^4.0.4"
   },
   "devDependencies": {
+    "@jxnblk/typography": "0.0.1",
     "typography-theme-alton": "^0.16.18",
     "typography-theme-anonymous": "^0.15.10",
     "typography-theme-bootstrap": "^0.16.18",

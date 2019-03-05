@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { ThemeContext } from '@emotion/core'
 import styled from '@emotion/styled'
 import {
   space,
@@ -14,6 +13,7 @@ import {
 } from 'styled-system'
 import {
   TypographyProvider,
+  useTypography,
   createComponents
 } from 'typography-system'
 import GettingStarted from './getting-started.mdx'
@@ -48,6 +48,17 @@ const Container = props =>
     }}
   />
 
+const ThemeDebug = ({
+  name = 'space',
+}) => {
+  const theme = useTypography()
+  return (
+    <pre
+      children={JSON.stringify(theme[name], null, 2)}
+    />
+  )
+}
+
 export default props => {
   const [ themeName, setTheme ] = useState('funston')
   const theme = themes[themeName]
@@ -81,24 +92,40 @@ export default props => {
               />
             ))}
           </select>
+          <button
+            onClick={e => {
+              const keys = Object.keys(themes)
+              const i = keys.indexOf(themeName)
+              const key = keys[i - 1]
+              if (!key) return
+              setTheme(key)
+            }}>
+            Previous
+          </button>
+          <button
+            onClick={e => {
+              const keys = Object.keys(themes)
+              const i = keys.indexOf(themeName)
+              const key = keys[i + 1]
+              if (!key) return
+              setTheme(key)
+            }}>
+            Next
+          </button>
         </Flex>
+        <ThemeDebug />
         <h1>typography-system</h1>
-        <GettingStarted />
-        <Box p={3} bg='lightgray'>
+        <Box p={3}
+          mb={3}
+          bg='lightgray'>
           <Text
-            as='p'
             fontFamily='heading'
             fontSize={4}
             fontWeight='bold'>
             Text Component
           </Text>
-          <T.h1 color='tomato'>T.h1 component</T.h1>
         </Box>
-        <ThemeContext.Consumer>
-          {system => (
-            <pre children={JSON.stringify(system, null, 2)} />
-          )}
-        </ThemeContext.Consumer>
+        <GettingStarted />
       </Container>
     </TypographyProvider>
   )
