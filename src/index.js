@@ -1,7 +1,6 @@
 import React, { useMemo, useEffect, useContext } from 'react'
 import Typography from 'typography'
 import { ThemeContext } from '@emotion/core'
-import { ThemeProvider } from 'emotion-theming'
 import styled from '@emotion/styled'
 import { color } from 'styled-system'
 import merge from 'lodash.merge'
@@ -124,9 +123,8 @@ export const TypographyProvider = ({
     return [ styles, systemTheme ]
   }, [ theme ])
 
-
   return (
-    <ThemeProvider theme={systemTheme}>
+    <ThemeContext.Provider theme={systemTheme}>
       <GoogleFont theme={theme} />
       <style
         dangerouslySetInnerHTML={{
@@ -134,6 +132,6 @@ export const TypographyProvider = ({
         }}
       />
       <Root {...props} />
-    </ThemeProvider>
+    </ThemeContext.Provider>
   )
 }
