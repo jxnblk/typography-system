@@ -48,7 +48,12 @@ const Container = props =>
 
 export default props => {
   const [ themeName, setTheme ] = useState('funston')
-  const theme = themes[themeName]
+  const theme = {
+    ...themes[themeName],
+    colors: {
+      primary: '#07c',
+    }
+  }
 
   return (
     <TypographyProvider theme={theme}>
@@ -81,7 +86,7 @@ export default props => {
         </Flex>
         <h1>typography-system</h1>
         <GettingStarted />
-        <Box p={3} bg='lightgray'>
+        <Box p={3} bg='primary'>
           <Text
             as='p'
             fontFamily='heading'

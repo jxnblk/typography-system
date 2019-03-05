@@ -27,7 +27,7 @@ const getFontSizes = styles => {
   return arr
 }
 
-export const createTheme = (baseTheme, typography) => {
+export const createTheme = (typography) => {
   const {
     bodyFontFamily,
     headerFontFamily,
@@ -55,27 +55,24 @@ export const createTheme = (baseTheme, typography) => {
   const colors = merge({
     text: get(styles, 'body.color'),
     link: get(styles, 'a.color'),
-  }, baseTheme.colors)
+  }, typography.options.colors)
 
+  const scale = [
+    1, 2, 3, 4, 5, 6, 7, 8
+  ].map(n => Math.pow(2, n))
   const space = [
     0,
-    typography.rhythm(1/4),
-    typography.rhythm(1/2),
-    typography.rhythm(1),
-    typography.rhythm(2),
-    typography.rhythm(4),
-    typography.rhythm(8),
-    typography.rhythm(16),
+    ...scale.map(n => typography.rhythm(n / 6))
   ]
 
   const theme = {
+    ...typography.options,
     fonts,
     fontSizes,
     fontWeights,
     lineHeights,
     colors,
     space,
-    ...baseTheme,
   }
   return theme
 }
@@ -115,7 +112,7 @@ export const TypographyProvider = ({
       includeNormalize: false,
       ...options
     })
-    const systemTheme = createTheme(theme, typography)
+    const systemTheme = createTheme(typography)
     const styles = typography.toString()
     return [ styles, systemTheme ]
   }, [ theme ])
